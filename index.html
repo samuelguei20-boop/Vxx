@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BABY CASH COIN</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+<!-- ONBOARDING -->
+<div id="onboarding" class="onboarding">
+  <!-- Splash -->
+  <div id="splashScreen" class="onboard-screen active">
+    <img src="splash.png" alt="Splash" class="onboard-img">
+    <div class="loader"></div>
+    <p>Chargement...</p>
+  </div>
+
+  <!-- Bienvenue -->
+  <div id="welcomeScreen" class="onboard-screen">
+    <img src="welcome.png" alt="Bienvenue" class="onboard-img">
+    <button id="startBtn" class="main-btn">Commencer</button>
+  </div>
+
+  <!-- Langue -->
+  <div id="langScreen" class="onboard-screen">
+    <h2>Choisis ta langue</h2>
+    <button class="lang-btn" data-lang="fr">Français</button>
+    <button class="lang-btn" data-lang="en">English</button>
+    <button class="lang-btn" data-lang="es">Español</button>
+  </div>
+
+  <!-- RGPD -->
+  <div id="rgpdScreen" class="onboard-screen">
+    <h2>Règles de confidentialité</h2>
+    <div class="rgpd-text" id="rgpdText">
+      <!-- Tu colles ton texte ici -->
+    </div>
+    <div class="rgpd-btns">
+      <button id="acceptRgpd" class="main-btn">Accepter</button>
+      <button id="declineRgpd" class="sec-btn">Refuser</button>
+    </div>
+  </div>
+
+  <!-- Connexion -->
+  <div id="loginScreen" class="onboard-screen">
+    <h2>Connexion</h2>
+    <input type="email" id="loginEmail" placeholder="Adresse email">
+    <input type="password" id="loginPass" placeholder="Mot de passe">
+    <button id="loginBtn" class="main-btn">Valider</button>
+    <p class="link-text">Pas de compte? <span id="toRegister">M'inscrire</span></p>
+  </div>
+
+  <!-- Inscription -->
+  <div id="registerScreen" class="onboard-screen">
+    <h2>Inscription</h2>
+    <input type="text" id="regNom" placeholder="Nom">
+    <input type="text" id="regPrenom" placeholder="Prénom">
+    <input type="email" id="regEmail" placeholder="Adresse email">
+    <input type="email" id="regEmailConfirm" placeholder="Confirmer l'adresse email">
+    <input type="text" id="regPseudo" placeholder="Pseudo">
+    <input type="password" id="regPass" placeholder="Mot de passe">
+    <input type="password" id="regPassConfirm" placeholder="Confirmer le mot de passe">
+
+    <label class="upload-label">
+      <span>Choisir avatar</span>
+      <input type="file" id="regAvatar" accept="image/*">
+    </label>
+    <img id="avatarPreview" class="avatar-preview">
+
+    <input type="password" id="regPin" placeholder="PIN pour actions sensibles">
+    <input type="password" id="regPinConfirm" placeholder="Confirmer PIN">
+
+    <label class="check-label">
+      <input type="checkbox" id="regLoc"> Localisation obligatoire par BCC autorisée
+    </label>
+
+    <input type="text" id="regMobile" placeholder="Numéro Mobile Money">
+    <input type="text" id="regOtp" placeholder="Code OTP personnel">
+    <button id="sendOtpBtn" class="sec-btn">Envoyer OTP</button>
+    <button id="registerBtn" class="main-btn">Valider</button>
+
+    <div id="regResult" class="reg-result hidden">
+      <p>ID Unique: <span id="userId"></span></p>
+      <p>Solde BCC: <span id="userBcc">0</span></p>
+      <p>Solde Récompense: <span id="userReward">0</span></p>
+      <p>Historique initialisé</p>
+    </div>
+  </div>
+</div>
+
+<!-- APP PRINCIPALE -->
+<div id="app" class="hidden">
+  <div class="bg-animation">
+    <span></span><span></span><span></span><span></span><span></span>
+  </div>
+
+  <header class="header">
+    <div class="header-left">
+      <h1 id="headerPseudo">Pseudo</h1>
+      <div class="top-level">
+        <div class="badge" id="rankBadge">🥉 Bronze</div>
+        <div class="xp-box">
+          <div class="xp-text">
+            <span id="levelText">Niveau 1</span>
+            <span id="levelPercent">0%</span>
+          </div>
+          <div class="xp-bar"><div class="xp-fill"></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="header-right">
+      <button class="notif-btn" id="notifBtn"><i class="fa-regular fa-bell"></i></button>
+      <div class="bcc-logo"><div class="bcc-inner">BCC</div></div>
+    </div>
+  </header>
+
+  <section id="homeSection" class="page active-page">
+    <div class="future-box">
+      <div class="future-title">❝ BCC FUTURE ❞</div>
+      <div class="future-scroll"><div class="future-track">
+        <span>Bienvenue dans notre univers</span>
+        <span>Votre avenir numérique commence ici</span>
+        <span>Gagnez des récompenses BCC</span>
+      </div></div>
+    </div>
+
+    <div class="balance-card">
+      <button class="eye-btn" id="toggleBalance"><i class="fa-regular fa-eye"></i></button>
+      <p class="balance-title">Solde principal</p>
+      <div class="balance-main">
+        <h2 id="balanceText">0</h2><span>BCC</span>
+      </div>
+      <div class="cfa-box">
+        <p>Estimation en CFA</p>
+        <div class="cfa-live">
+          <h3 id="cfaText">≈ 0 CFA</h3>
+          <div class="live-dot"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="action-btn" data-action="send"><div class="action-circle"><i class="fa-solid fa-paper-plane"></i></div><span>Envoyer</span></button>
+      <button class="action-btn" data-action="receive"><div class="action-circle"><i class="fa-solid fa-download"></i></div><span>Recevoir</span></button>
+      <button class="action-btn" data-action="scan"><div class="action-circle"><i class="fa-solid fa-qrcode"></i></div><span>Scanner</span></button>
+      <button class="action-btn" data-action="convert"><div class="action-circle"><i class="fa-solid fa-repeat"></i></div><span>Convertir</span></button>
+    </div>
+
+    <div class="history-box">
+      <div class="history-icon">🕓</div>
+      <h3>Aucun historique</h3>
+      <p>Les transactions apparaîtront ici</p>
+    </div>
+
+    <div class="bottom-buttons">
+      <button class="contact-btn" id="contactBtn">Nous contacter</button>
+      <button class="logout-btn" id="logoutBtn">Déconnecter</button>
+    </div>
+
+    <div class="contact-info" id="contactInfo">
+      <p class="contact-email">BCCciservice@gmail.com</p>
+      <p class="contact-hint">Avant de cliquer, mettez votre ID BCC d'abord</p>
+    </div>
+  </section>
+
+  <section id="rewardSection" class="page">
+    <div class="reward-header">
+      <h2>💎 Récompenses BCC</h2>
+      <div class="reward-balance" id="rewardBalance">0 BCC</div>
+      <button class="main-btn" id="sendRewardBtn">Envoyer mes récompenses sur mon wallet</button>
+    </div>
+
+    <div class="scratch-card">
+      <h3>Carte cadeau à gratter</h3>
+      <div id="scratchArea" class="scratch-area">Gratte ici</div>
+      <p id="scratchTimer" class="hidden">Prochain grattage dans : <span id="timerText">24:00:00</span></p>
+    </div>
+  </section>
+
+  <section id="missionSection" class="page">
+    <div class="mission-box">
+      <h2>1. MISSION EXTÉRIEUR</h2>
+      <div class="mission-group">
+        <h3>CPALEAD</h3>
+        <button class="mission-btn" data-link="cpalead-offerwall">Offerwall</button>
+        <button class="mission-btn" data-link="cpalead-games">Jeux rémunérés</button>
+        <button class="mission-btn" data-link="cpalead-apps">Installation d'application</button>
+        <button class="mission-btn" data-link="cpalead-api">API</button>
+      </div>
+      <div class="mission-group">
+        <h3>OFFERTORO</h3>
+        <button class="mission-btn" data-link="offertoro-games">Jeux rémunérés</button>
+        <button class="mission-btn" data-link="offertoro-mobile">Offre mobile</button>
+        <button class="mission-btn" data-link="offertoro-survey">Sondage</button>
+        <button class="mission-btn" data-link="offertoro-cpa">CPA</button>
+      </div>
+      <div class="mission-group">
+        <h3>LOOTABLY</h3>
+        <button class="mission-btn" data-link="lootably-video">Vidéo</button>
+        <button class="mission-btn" data-link="lootably-task">Mini tâche</button>
+        <button class="mission-btn" data-link="lootably-survey">Sondage</button>
+        <button class="mission-btn" data-link="lootably-app">Application</button>
+      </div>
+    </div>
+
+    <div class="mission-box">
+      <h2>2. MISSION RÉSEAUX SOCIAUX</h2>
+      <div class="social-grid">
+        <button class="social-btn" data-link="facebook">Facebook</button>
+        <button class="social-btn" data-link="tiktok">TikTok</button>
+        <button class="social-btn" data-link="youtube">YouTube</button>
+        <button class="social-btn" data-link="others">Autres réseaux</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="settingsSection" class="page">
+    <div class="profile-card">
+      <div class="profile-avatar" id="profileAvatar"><i class="fa-solid fa-user"></i></div>
+      <input type="text" id="setNom" placeholder="Nom complet">
+      <input type="text" id="setPseudo" placeholder="Pseudo">
+      <input type="text" id="setPhone" placeholder="Téléphone">
+      <input type="email" id="setEmail" placeholder="Email">
+      <button class="verify-btn" id="verifyBtn">Vérifier mon compte</button>
+      <p class="limit-text">Limite mensuelle : <span id="monthlyLimit">2M</span></p>
+      <button class="save-btn" id="saveSettings">Enregistrer</button>
+    </div>
+  </section>
+
+  <nav class="bottom-nav">
+    <button class="nav-item active-nav" id="homeBtn"><i class="fa-solid fa-house"></i><span>Accueil</span></button>
+    <button class="nav-item" id="rewardBtn"><i class="fa-solid fa-gift"></i><span>Récompense</span></button>
+    <button class="center-btn" id="centerBtn"><div class="center-inner"><div class="center-scroll"><span>MISSION DU JOUR</span></div></div></button>
+    <button class="nav-item" id="missionBtn"><i class="fa-solid fa-chart-line"></i><span>Missions</span></button>
+    <button class="nav-item" id="settingsBtn"><i class="fa-regular fa-user"></i><span>Paramètres</span></button>
+  </nav>
+
+  <div class="popup" id="popup"></div>
+
+  <div class="modal hidden" id="rankModal">
+    <div class="modal-box">
+      <h3>Niveaux & Médailles</h3>
+      <div class="rank-list">
+        <div class="rank-item"><span>🥉</span><p>N1 à 15 : Bronze</p></div>
+        <div class="rank-item"><span>🥈</span><p>N16 à 30 : Silver</p></div>
+        <div class="rank-item"><span>🥇</span><p>N31 à 45 : Gold</p></div>
+        <div class="rank-item"><span>💎</span><p>N50+ : Diamond</p></div>
+      </div>
+      <button class="modal-close" id="closeRank">Fermer</button>
+    </div>
+  </div>
+
+  <div class="modal hidden" id="actionModal">
+    <div class="modal-box">
+      <h3 id="actionTitle">Action</h3>
+      <div id="actionContent"></div>
+      <button class="modal-close" id="closeAction">Fermer</button>
+    </div>
+  </div>
+
+  <div class="modal hidden" id="missionModal">
+    <div class="modal-box">
+      <h3>MISSION</h3>
+      <p>PRIX EN BCC : <span id="missionPrice">0</span></p>
+      <p>DURÉE : <span id="missionDuration">0 min</span></p>
+      <button id="startMissionBtn" class="main-btn">Commencer la mission</button>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+                                               </html>
